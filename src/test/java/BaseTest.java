@@ -26,7 +26,6 @@ public class BaseTest {
     @Before
     public void setUp() {
         String browser = getBrowser();
-        System.out.println(">>> [SETUP] Запуск браузера: " + browser);
 
         if ("chrome".equalsIgnoreCase(browser)) {
             WebDriverManager.chromedriver().setup();
@@ -36,7 +35,7 @@ public class BaseTest {
         } else {
             WebDriverManager.firefoxdriver().setup();
             FirefoxOptions options = new FirefoxOptions();
-            options.addPreference("permissions.default.image", 2); // Откл. картинки
+            options.addPreference("permissions.default.image", 2);
             driver = new FirefoxDriver(options);
         }
 
@@ -53,17 +52,9 @@ public class BaseTest {
         }
     }
 
-    /**
-     * АГРЕССИВНОЕ удаление баннеров через JS Injection.
-     * Работает даже если XPath не видит элементы.
-     */
     protected void handleCookieBanner() {
-        System.out.println("... [COOKIE] Попытка удаления баннера...");
-
-        // Даем время на появление
         try { Thread.sleep(3000); } catch (InterruptedException e) {}
 
-        // Скрипт, который ищет и удаляет известные контейнеры куки
         String script =
                 "var selectors = [" +
                         "'#usercentrics-root', " +
@@ -81,7 +72,6 @@ public class BaseTest {
                         "       el.remove();" +
                         "   });" +
                         "});" +
-                        "// Также пробуем кликнуть, если есть кнопка внутри body" +
                         "var btns = document.querySelectorAll('button');" +
                         "for(var i=0; i<btns.length; i++) {" +
                         "   var txt = btns[i].innerText.toLowerCase();" +
@@ -92,12 +82,10 @@ public class BaseTest {
 
         try {
             js.executeScript(script);
-            System.out.println("... [COOKIE] JS-скрипт выполнен.");
         } catch (Exception e) {
-            System.out.println("... [COOKIE] Ошибка JS: " + e.getMessage());
+            // Ignore errors
         }
 
-        // Доп. пауза
         try { Thread.sleep(1000); } catch (InterruptedException e) {}
     }
 

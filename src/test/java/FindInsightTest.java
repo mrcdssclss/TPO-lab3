@@ -28,7 +28,7 @@ public class FindInsightTest extends BaseTest {
 
     @Test
     public void testInsight_OpenArticle() {
-        System.out.println("[TS-08-02] Открытие статьи...");
+        System.out.println("[TS-06-02] Открытие статьи...");
         driver.get("https://www.xing.com/insights");
         handleCookieBanner();
 

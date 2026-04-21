@@ -83,7 +83,6 @@ public class BaseTest {
         try {
             js.executeScript(script);
         } catch (Exception e) {
-            // Ignore errors
         }
 
         try { Thread.sleep(1000); } catch (InterruptedException e) {}
